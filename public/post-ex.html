@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--make a form that will send post data to be processed-->
+    <!--this is going to be similar to when we do this to actually process data to be saved be a database-->
+    <form method="POST" action="/form-process">
+
+        <p>
+            <!--if you remember from when we were doing events that I said that there is a difference between the id of an html element and its 'name'-->
+            <!--the id is what the local html server/webpage uses to do things like js and css manipulation-->
+            <!--name is the variable/object name that gets sent OUTSIDE of the local html page to a server-->
+            <label>Name?<input type="text" name="name"></label>
+        </p>
+        <p>
+            <label>Age? <input type="text" name="age"></label>
+        </p>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
