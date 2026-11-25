@@ -1,41 +1,34 @@
+//we are going to create a song api to perform CRUD functionality - create, read, update, and delete a song
+//we will first start with a route that will allow us to grab all the songs that we have stored in a map/array/object
+//we will replace this with db calls next week.
 const express = require('express')
 const app = express()
+const router = express.Router()
 
+//grab a song...the song will be in the form on an object for now...we will make a db model for it next week
+//since we are working with api data remember - we will now start using json
+app.use(express.json())
 
-//shortcut to serve static files (aka html and css files) using a public directory
-
-app.use(express.static("public"))
-//to get post requests that are not encoded we will have to use this middleware..later on we will just use JSON
-app.use(express.urlencoded({extended: false}))
-
-
-//in express we can take in data from a request...in other word if data is sent from an client, we can process that data for things like POST/PUT requests, searching, querying databases, etc...
-
-//for instance we can grab query parameters (? in urls that give use variables) as a way to process some data
-//lets start simply by displaying some query parameters on a url when someone visits
-
-app.get("/hello", function(req,res){
-    //we are going to use the req built in method called query which can grab query parameters from a url in a get request
-    const html = 
-    `<h1>Hello, ${req.query.name}!</h1>
-     <p>You are ${req.query.age} years old</p>
-    `
-    res.send(html)
+router.get('/songs', function(req,res){
+    const song = {
+        title: "Uptown Funk",
+        artist: "Bruno Mars",
+        popularity: 10,
+        releaseDate: new Date(2014, 10, 10),
+        genre: ["funk", "boogie"]
+    }
+    res.json(song)
 })
 
-//we can use route parameters just like query parameters to send data back in the form a get request
-//the is the REST way to do it along with query parameters
-//route parameters are url/users/1 would go to the first user in the database
-// the : indicates part of the url can be changed (dynamic) and it is the route parameter
-//you can use the params method to grab a parameter along with the parameters name
-
-app.get("/users/:username", function(req, res) {
-   const username = req.params.username;
-   res.send(`<h1> Profile for ${username} </h1>`);
-});
-
-app.listen(3000, function(){
-    console.log("Server running on port 3000")
+router.post('/songs', function(req,res){
+    console.log(req.body)
+    //send a status of ok that this was processed
+    res.sendStatus(201)
 })
 
+//all routes need to go to /api before going to the route.  that is what the route is doing and this will be middleware
+app.use("/api", router)
+//to get request from post data in the form of JSON
 
+
+app.listen(3000)
